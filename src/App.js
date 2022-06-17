@@ -1,79 +1,81 @@
 
-  import React , {Component } from 'react';
+  import React  , {useState , useEffect } from 'react';
 
   import * as BooksAPI from './BooksAPI';
   import {BrowserRouter ,   Route, Routes} from "react-router-dom";
   import Home from './Components/Home';
   import Search from './Components/Search';
+
   
 
 
  
-  class App extends Component {
+  const App = () => { 
    
-    state = {
     
-      allBooks : [],
-      search : "",
-      booksSearch : [],
-   
-    }
-   componentDidMount(){
+    const [allBooks , setAllBooks] = useState([]);
+    const [search , setSearch] = useState("");
+    const [booksSearch , setBooksSearch] = useState([]);
+    
 
-    BooksAPI.getAll().then(
-      (res)=>{ 
-        this.setState({ allBooks : res }); 
+    const getBook = () =>{
+      BooksAPI.getAll().then(
+        (res)=>{ 
+          setAllBooks(res); 
+  
+        });
+  }
+  useEffect(getBook,[]);
 
-      });            
-    }
+  
+    
 
-    changeSheif = async (book,sheif) => {
+    const changeSheif = async (book,sheif) => {
         await BooksAPI.update(book,sheif) ;
         await BooksAPI.getAll().then( 
           (res) => {
-            this.setState( {allBooks:res } );
+            setAllBooks(  res );
           })
         }
-    handleSearch = async (event) =>{
-      await this.setState(
-        {search: event.target.value}
-        );
 
-        if(this.state.search.length){
-          this.handleFormSearch(this.state.search)
+    const handleSearch = async (event) =>{
+      await setSearch( event.target.value);
+
+        if(search.length){
+          handleFormSearch(search)
         }
         
     };
-    handleFormSearch = async (search) =>{
+  
+    const handleFormSearch = async (search) =>{
       BooksAPI.search(search).then( 
           (data)=>{
-            this.setState({booksSearch : data});
+            setBooksSearch( data);
     
           }
           
       )
       
     }
+
     
-   //this.changeSheif(this.state.allBooks.id,this.state.allBooks.sheif);
-    render(){
+    
  
       return (
         
         <BrowserRouter>
           <div className="app">
             <   Routes >
-              <Route path='/'  element={<Home allBook={this.state.allBooks} changeSheif = {this.changeSheif} />}  />
-              <Route path='/Search'  element={<Search handleSearch = {this.handleSearch}
-                search = {this.state.search} booksSearch={this.state.booksSearch}
-                changeSheif = {this.changeSheif} 
-                loadSearch={this.state.loadSearch}/>}  />
+              <Route path='/'  element={<Home allBook={allBooks} changeSheif = {changeSheif} />}  />
+              <Route path='/Search'  element={<Search handleSearch = {handleSearch}
+                search = {search} booksSearch={booksSearch}
+                changeSheif = {changeSheif} />}  />
             </   Routes >
           </div>
         </BrowserRouter>
  
     ); 
-    }
+    
       
   }
 

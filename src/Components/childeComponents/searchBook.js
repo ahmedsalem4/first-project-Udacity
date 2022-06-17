@@ -1,17 +1,21 @@
-import React , {Component}from 'react'
+import React from 'react'
 import Book from './Book'
-class searchBook extends Component  {
 
-    render(){
+
+const searchBook = (props) => {
+
+    let search = props.search;
+    let booksSearch  = props.booksSearch;
+    let changeSheif = props.changeSheif;
         return (
 
             <ul className="books-grid">
                 {
-                    this.props.search.length ?  (
-                    this.props.booksSearch.map( (book) =>(
+                    search.length ?  (
+                    booksSearch.map( (book) =>(
 
                           <div key={book.id}>
-                          <Book book={book} changeSheif={this.props.changeSheif}/>
+                          <Book book={book} changeSheif={changeSheif}/>
                          </div>
                     )
       
@@ -24,6 +28,6 @@ class searchBook extends Component  {
       )
     }
   
-}
+
 
 export default searchBook
