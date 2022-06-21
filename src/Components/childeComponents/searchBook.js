@@ -12,15 +12,15 @@ const searchBook = (props) => {
             <ul className="books-grid">
                 {
                     search.length ?  (
-                    booksSearch.map( (book) =>(
+                        booksSearch.length ? ( booksSearch.map( (book) =>(
 
                           <div key={book.id}>
                           <Book book={book} changeSheif={changeSheif}/>
-                         </div>
-                    )
+                         </div> 
+                    ) ))  : null
       
                        
-                       )
+                       
                     ) :null
                 }
                 </ul>
