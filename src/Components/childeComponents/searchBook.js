@@ -7,17 +7,22 @@ const searchBook = (props) => {
     let search = props.search;
     let booksSearch  = props.booksSearch;
     let changeSheif = props.changeSheif;
+    
+
         return (
 
             <ul className="books-grid">
                 {
                     search.length ?  (
-                        booksSearch.length ? ( booksSearch.map( (book) =>(
+                        
+                        
+                         booksSearch.map( (book) =>(
+                            
 
-                          <div key={book.id}>
-                          <Book book={book} changeSheif={changeSheif}/>
-                         </div> 
-                    ) ))  : null
+                    
+                          <Book  key={book.id} book={ book} changeSheif={changeSheif}/>
+                       
+                    ) )
       
                        
                        

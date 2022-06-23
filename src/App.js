@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
   import React  , {useState , useEffect } from 'react';
 
@@ -19,13 +20,13 @@
     
 
     const getBook = () =>{
-      BooksAPI.getAll().then(
+       BooksAPI.getAll().then(
         (res)=>{ 
           setAllBooks(res); 
   
         });
   }
-  useEffect(getBook,[]);
+     useEffect(getBook,[]);
 
   
     
@@ -36,7 +37,11 @@
           (res) => {
             setAllBooks(  res );
           })
+          handleFormSearch(search);
         }
+
+
+
 
     const handleSearch = async (event) =>{
       await setSearch( event.target.value);
@@ -44,13 +49,29 @@
         if(search.length){
           handleFormSearch(search)
         }
+
         
     };
+
+
+
   
     const handleFormSearch = async (search) =>{
       BooksAPI.search(search).then( 
           (data)=>{
-            setBooksSearch( data);
+            if(data && ! data.error){
+              setBooksSearch(data.map((bookSearch)=>{
+                allBooks.forEach((book)=>{
+                  if(bookSearch.id === book.id){
+                    bookSearch.shelf = book.shelf;
+                  }
+                })
+                return bookSearch;
+              }))
+              
+            }else{
+              
+            }
     
           }
           
@@ -59,7 +80,7 @@
     }
 
     
-    
+     
  
       return (
         
@@ -68,7 +89,7 @@
             <   Routes >
               <Route path='/'  element={<Home allBook={allBooks} changeSheif = {changeSheif} />}  />
               <Route path='/Search'  element={<Search handleSearch = {handleSearch}
-                search = {search} booksSearch={booksSearch}
+                search = {search} allBook={allBooks} booksSearch={booksSearch}
                 changeSheif = {changeSheif} />}  />
             </   Routes >
           </div>

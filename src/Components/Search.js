@@ -6,23 +6,27 @@ const Search = (props) => {
   const booksSearch = props.booksSearch;
   const handleSearch = props.handleSearch;
   const changeSheif = props.changeSheif;
-  const  loadSearch = props.loadSearch  
+  const allBook = props.allBook;
+  
+
+
+  
   return (
     <div>
          <div className="search-books">
             <div className="search-books-bar">
-              <Link to="/" className="close-search">Close</Link>
+              <Link to="/" className="close-search" >Close</Link>
               <div className="search-books-input-wrapper">
                 
                 <input type="text" placeholder="Search by title or author"
-                  onChange={handleSearch}  value={search}/>
-                  <span>{search}</span>
+                  onChange={handleSearch} value={search}  />
+                  <span >{search}</span>
               </div>
               <div className="search-books-results">
                </div>   
             </div>
             
-             <SearchBook search={search} booksSearch={booksSearch} changeSheif={changeSheif} loadSearch = {loadSearch}/>  
+             <SearchBook search={search} allBook={allBook} booksSearch={booksSearch} changeSheif={changeSheif} />  
             
           </div>
           
@@ -31,3 +35,4 @@ const Search = (props) => {
 }
 
 export default Search
+
